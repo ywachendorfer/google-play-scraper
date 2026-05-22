@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { assert } from 'chai';
 
 describe('Throttle tests', function () {
-  this.timeout(15000);
+  this.timeout(6000);
   let server;
 
   // Create a fake http server to emulate http call and responses.
@@ -27,7 +27,7 @@ describe('Throttle tests', function () {
       limit: 1,
       interval: 2000
     });
-    return Promise.all([req(url), req(url), req(url)])
+    return Promise.all([req({ url }), req({ url }), req({ url })])
       .then((response) => response.map(req => new Date(req.headers.date).getTime()))
       .then((dates) => {
         const firstAndSecondReq = dates[1] - dates[0];
