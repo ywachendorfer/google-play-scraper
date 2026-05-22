@@ -129,6 +129,17 @@ describe('Search method', () => {
         .then((apps) => assertIdsInArray(apps, 'com.kiloo.subwaysurf'));
     });
 
+    it('should include the exact match app when search term is an exact app name', () => {
+      return gplay.search({ term: 'Google Chrome' }).then((apps) => {
+        assert.isAbove(apps.length, 0);
+        apps.map(assertValidApp);
+        assert.isTrue(
+          apps.some((app) => app.appId === 'com.android.chrome'),
+          'Google Chrome (com.android.chrome) should appear in results for exact name search'
+        );
+      });
+    });
+
     it('should return empty set when no results found', () => {
       return gplay
         .search({ term: 'asdasdyxcnmjysalsaflaslf' })
